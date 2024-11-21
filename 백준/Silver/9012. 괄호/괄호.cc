@@ -19,13 +19,12 @@ int main() {
 	cin >> tc;
 
 	while (tc-- > 0) {
+		string result="YES";
 		cin >> cmd;
 
 		int length = cmd.length();
 
-		int i = 0;
-
-		for (; i < length; i++) {
+		for (int i = 0; i < length; i++) {
 			char c = cmd[i];
 
 			if (c == '(') {
@@ -33,6 +32,7 @@ int main() {
 			}
 			else if (c == ')') {
 				if (dq.empty()) {
+					result = "NO";
 					break;
 				}
 				else
@@ -40,15 +40,15 @@ int main() {
 			}
 		}
 
-		if (i < length)
-			cout << "NO" << "\n";
-		else if (!dq.empty())
-			cout << "NO" << "\n";
-		else
-			cout << "YES" << "\n";
 
-		dq.clear();
+		if (!dq.empty())
+			result = "NO";
+
+
 		cmd.clear();
+		dq.clear();
+
+		cout << result << "\n";
 	}
 
 
