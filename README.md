@@ -12,3 +12,5 @@ This is an auto push repository for Baekjoon Online Judge created with [Baekjoon
 ## cout으로 소수점 정하기 & 반올림 방지. cout<<fixed; cout.precision(원하는 소수점 자리수);
 
 ## cout을로 한 줄 받기 (공백 포함, 엔터 미포함함). #include\<string\> string str; getline(cin,str);
+
+## 자료구조에서 조회하는 동작을 할때는 항상 앞서 비어있는지를 확인하는 동작을 하자.
