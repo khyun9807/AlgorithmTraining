@@ -1,8 +1,14 @@
 # AlgorithmTraining
 This is an auto push repository for Baekjoon Online Judge created with [BaekjoonHub](https://github.com/BaekjoonHub/BaekjoonHub).
 
-## << endl 사용금지, <<"\n" 사용.
+## << endl 사용금지, <<"\n" 사용. endl은 훨씬 시간이 많이 소비된다.
 
 ## cin.tie(0); 사용. //cin과 cout을 묶어주지 않음.
 
 ## ios::sync_with_stdio(false); 사용. c++ 스타일 코드만 사용되므로 c 스타일의 표준 스트림과 동기화할 필요 없어짐.
+
+## 문제에 특정 자료구조가 사용되었다에 집중하자.해당 자료구조에 맞게 사고하자.
+
+## cout으로 소수점 정하기 & 반올림 방지. cout<<fixed; cout.precision(원하는 소수점 자리수);
+
+## cout을로 한 줄 받기 (공백 포함, 엔터 미포함함). #include<string> string str; getline(cin,str);
