@@ -7,7 +7,7 @@ This is an auto push repository for Baekjoon Online Judge created with [Baekjoon
 
 ## ios::sync_with_stdio(false); 사용. c++ 스타일 코드만 사용되므로 c 스타일의 표준 스트림과 동기화할 필요 없어짐.
 
-## 문제에 특정 자료구조가 사용되었다에 집중하자.해당 자료구조에 맞게 사고하자.
+## 문제에 특정 자료구조가 사용되었다에 집중하자.해당 자료구조에 맞게 사고하자. 예) " 여러 개의 문서가 쌓인다면 Queue 자료구조에 쌓여서 FIFO - First In First Out - 에 따라 인쇄가 되게 된다. ..."
 
 ## cout으로 소수점 정하기 & 반올림 방지. cout<<fixed; cout.precision(원하는 소수점 자리수);
 
