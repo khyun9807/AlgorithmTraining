@@ -13,4 +13,4 @@ This is an auto push repository for Baekjoon Online Judge created with [Baekjoon
 
 ## cout을로 한 줄 받기 (공백 포함, 엔터 미포함함). #include\<string\> string str; getline(cin,str);
 
-## 자료구조에서 조회하는 동작을 할때는 항상 앞서 비어있는지를 확인하는 동작을 하자.
+## 자료구조에서 조회하는 동작을 할때는 항상 앞서 비어있는지를 확인하는 동작을 하자. 코드 예) if(!stack.empty()) { if(stack.back()==10){ ... } ... } while(!stack.empty()) { stack.front(); ... } 처럼 조건문에 비었는지 확인하고 내용에 조회하는 내용을 넣자.
