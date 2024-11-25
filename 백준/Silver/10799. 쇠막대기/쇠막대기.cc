@@ -3,43 +3,35 @@
 
 using namespace std;
 
-
 int main() {
 	ios::sync_with_stdio(false);
 	cin.tie(0);
 
+	deque<char> stck;
+
 	string cmd;
 	cin >> cmd;
 
-	int fpos=-1;
-	while (1) {
-		fpos = cmd.find("()",fpos+1);
-		if (fpos == string::npos)
-			break;
-
-		cmd.replace(fpos, 2, "|");
-	}
-
-	deque<int> stck;
-	int r=0;
 	int len = cmd.length();
 
+	int r=0;
 	for (int i = 0; i < len; i++) {
 		char c = cmd[i];
 
 		if (c == '(') {
-			stck.push_back(0);
+			stck.push_back('(');
 		}
-		else if (c == ')') {
-			int t = stck.back();
+		else {//c==')'
+			char prev = cmd[i - 1];
+
 			stck.pop_back();
-			++t;
-			r += t;
-		}
-		else {//c == '|'
-			int size = stck.size();
-			for (int j = 0; j < size; j++)
-				stck[j] += 1;
+
+			if (prev == '(') {
+				r += stck.size();
+			}
+			else {//prev==')'
+				r += 1;
+			}
 		}
 	}
 
