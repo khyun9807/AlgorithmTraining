@@ -25,3 +25,4 @@ This is an auto push repository for Baekjoon Online Judge created with [Baekjoon
 
 ## 인덱스를 조건문에서 사용할 때 부등호로 비교할 때, 부등호는 "="이 포함된 부등호를 사용해라.
 
+## 1초에 N의 범위가 500: O(N^3) 이하. 2,000: O(N^2) 이하. 100,000: O(NlogN) 이하. 10,000,000: O(N) 이하. 10,000,000,000: O(logN) 이하 가능.
