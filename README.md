@@ -1,6 +1,8 @@
 # AlgorithmTraining
 This is an auto push repository for Baekjoon Online Judge created with [BaekjoonHub](https://github.com/BaekjoonHub/BaekjoonHub).
 
+## 1. 문제이해 2. 방법론 기법 생각(전체 탐색, 그리디, 동적계획법, 분할정복법 등등) 3. 방법론 기법을 구체화 할 특정 방법 생각(BFS/DFS, bellmon, warshall, count sort 등등) 4. 어울리는 자료구조 생각
+
 ## << endl 사용금지, <<"\n" 사용. endl은 훨씬 시간이 많이 소비된다.
 
 ## cin.tie(0); 사용. //cin과 cout을 묶어주지 않음.
@@ -18,3 +20,8 @@ This is an auto push repository for Baekjoon Online Judge created with [Baekjoon
 ## 왠만하면 쓸데없이 자료구조를 많이 사용하지 말자. 오히려 더 복잡해질 수 있다.
 
 ## 1)"전체적인 입력을 보고 전체적인 결과를 보고 분석하는 방법"도 있지만 2)"입력을 보고 입력을 차례대로 처리해 가며 결과가 만들어지는 '과정'을 생각하며 분석하는 방법"이 유용할 때가 더 많다. 예) 10799번 쇠막대기 문제. 1번방법론] 입력:()(((()))), 결과:6 왜 "()(((())))"는 6이 되냐 2번방법론] 입력:()(((()))). 과정-1:(),0 과정-2:()(,0 과정-3:()((((),3 과정-4:()(((()),4 ...
+
+## for문 보다는 while문을 사용해라.
+
+## 인덱스를 조건문에서 사용할 때 부등호로 비교할 때, 부등호는 "="이 포함된 부등호를 사용해라.
+
