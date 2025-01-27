@@ -3,6 +3,8 @@ This is an auto push repository for Baekjoon Online Judge created with [Baekjoon
 
 ## 1. 문제이해 2. 방법론 기법 생각(전체 탐색, 그리디, 동적계획법, 분할정복법 등등) 3. 방법론 기법을 구체화 할 특정 방법 생각(BFS/DFS, bellmon, warshall, count sort 등등) 4. 어울리는 자료구조 생각
 
+## 입력 값의 범위의 끝부분(맨 앞, 맨 끝)들로 테스트 하는 것을 잊지 말자.
+
 ## << endl 사용금지, <<"\n" 사용. endl은 훨씬 시간이 많이 소비된다.
 
 ## cin.tie(0); 사용. //cin과 cout을 묶어주지 않음.
@@ -11,7 +13,9 @@ This is an auto push repository for Baekjoon Online Judge created with [Baekjoon
 
 ## 작은 함수는 inline화 한다. (C++기준) inline 키워드 함수 앞에서 사용.
 
-## 난수 생성 코드 : #include 
+## 난수 생성 코드 : 
+## #include <random> random_device rd; mt19937 gen(rd());
+## uniform_int_distribution<int> dis(0,99); int randNum=dis(gen);
 
 ## 문제에 특정 자료구조가 사용되었다에 집중하자.해당 자료구조에 맞게 사고하자. 예) " 여러 개의 문서가 쌓인다면 Queue 자료구조에 쌓여서 FIFO - First In First Out - 에 따라 인쇄가 되게 된다. ..."
 
