@@ -67,7 +67,7 @@ int main() {
 
 		dq.push_back({ e, x });
 
-		if (dq.front().idx < s) {
+		while(dq.front().idx < s) {
 			dq.pop_front();
 		}
 
