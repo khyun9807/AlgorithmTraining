@@ -1,82 +1,67 @@
 #include <iostream>
+#include <vector>
 #include <deque>
-
-
+#include <string>
 using namespace std;
 
-typedef long long ll;
+void parse(string& str, vector<int>& vec)
+{
+    int num = 0;
+    bool negative = false;
 
-struct node {
-	int idx;
-	ll val;
+    for (char c : str) 
+    {
+        if (c == ' ') 
+        {
+            if (negative)
+                vec.push_back(-num);
+            else
+                vec.push_back(num);
+            
+            num = 0;
+            negative = false;
+        } 
+        else if (c == '-')
+            negative = true;
+        else
+            num = num * 10 + (c - '0');
+    }
+    
+    if (negative)
+        vec.push_back(-num);
+    else
+        vec.push_back(num);
 };
-int n, L;
-deque<ll> arr;
-deque<node> dq;
 
 int main() {
-	ios::sync_with_stdio(false);
-	cin.tie(0);
-	cout.tie(0);
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
 
-	cin >> n >> L;
+    int n, l;
+    cin >> n >> l;
+    cin.ignore();
 
-	for (int i = 1; i <= n; i++) {
-		ll x;
-		cin >> x;
-		arr.push_back(x);
-	}
+    vector<int> vec;
+    string a;
+    getline(cin, a);
+    parse(a,vec);
+    a.clear();
 
-	for (int i = 0; i <= L - 1; i++) {
-		ll x = arr.at(i);
+    deque<int> dq;
+    for (int i = 0; i < n; i++) {
+        if (!dq.empty() && dq.front() < i - l + 1) {
+            dq.pop_front();
+        }
 
-		while (dq.size() >= 1) {
-			node n = dq.back();
-			int nval = n.val;
+        while (!dq.empty() && vec[dq.back()] > vec[i]) {
+            dq.pop_back();
+        }
 
-			if (nval > x) {
-				dq.pop_back();
-			}
-			else {
-				break;
-			}
-		}
+        dq.push_back(i);
+        a += to_string(vec[dq.front()]) + ' '; // 결과를 문자열에 추가
+    }
 
-		dq.push_back({ i, x });
+    cout << a;
 
-		cout << dq.front().val << " ";
-	}
-
-	int s = 1;
-	int e = L;
-
-	while (e <= n - 1) {
-		ll x = arr.at(e);
-
-		while (dq.size() >= 1) {
-			node n = dq.back();
-			int nval = n.val;
-
-			if (nval > x) {
-				dq.pop_back();
-			}
-			else {
-				break;
-			}
-		}
-
-		dq.push_back({ e, x });
-
-		while(dq.front().idx < s) {
-			dq.pop_front();
-		}
-
-
-		cout << dq.front().val << " ";
-
-		++s;
-		++e;
-	}
-
-	return 0;
+    return 0;
 }
