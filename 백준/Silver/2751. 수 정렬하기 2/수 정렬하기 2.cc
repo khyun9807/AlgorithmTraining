@@ -168,8 +168,8 @@ int main() {
 	}
 
 
-	mergesort(cmd, 0, cmd.size() - 1);
-
+	//mergesort(cmd, 0, cmd.size() - 1);
+    sort(cmd.begin(),cmd.end());
 
 	str.clear();
 
