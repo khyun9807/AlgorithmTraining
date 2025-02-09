@@ -38,10 +38,10 @@ void parse(string str, deque<int>& cmd) {
 
 
 int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(0);
-    cout.tie(0);
-    
+	ios::sync_with_stdio(false);
+	cin.tie(0);
+	cout.tie(0);
+
 	int n;
 	cin >> n;
 	int k;
@@ -56,8 +56,10 @@ int main() {
 	deque<int> cmd;
 	parse(str, cmd);
 
-	make_heap(cmd.begin(), cmd.end());
-	sort_heap(cmd.begin(), cmd.end());
+	//make_heap(cmd.begin(), cmd.end());
+	//sort_heap(cmd.begin(), cmd.end());
+
+	sort(cmd.begin(), cmd.end());
 
 	cout << cmd[k - 1];
 
