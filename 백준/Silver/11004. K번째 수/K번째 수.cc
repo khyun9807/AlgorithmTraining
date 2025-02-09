@@ -59,7 +59,9 @@ int main() {
 	//make_heap(cmd.begin(), cmd.end());
 	//sort_heap(cmd.begin(), cmd.end());
 
-	sort(cmd.begin(), cmd.end());
+	//sort(cmd.begin(), cmd.end());
+
+	nth_element(cmd.begin(), cmd.begin() + (k-1), cmd.end());
 
 	cout << cmd[k - 1];
 
