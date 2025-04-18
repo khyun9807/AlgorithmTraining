@@ -26,18 +26,18 @@ int main() {
 	ios::sync_with_stdio(false);
 	cin.tie(0);
 	cout.tie(0);
-	
+
 	init();
 
 	while (m-- > 0) {
 		int x1, y1, x2, y2;
 		cin >> x1 >> y1 >> x2 >> y2;
-		
+
 		long long sum = 0;
 		for (int i = x1; i <= x2; i++) {
-			sum+=(getAcculSum(i, y2) - getAcculSum(i, y1 - 1));
+			sum += (getAcculSum(i, y2) - getAcculSum(i, y1 - 1));
 		}
-		cout << sum<<"\n";
+		cout << sum << "\n";
 	}
 
 
