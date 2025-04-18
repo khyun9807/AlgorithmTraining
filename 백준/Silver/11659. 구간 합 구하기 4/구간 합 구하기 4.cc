@@ -1,31 +1,68 @@
 #include <iostream>
+#include <algorithm>
 #include <deque>
+#include <string>
 
 using namespace std;
 
-int n; int m;
 deque<int> dq;
-deque<int> accul;
+int n;
+int qn;
 
-void init() {
-	dq.clear();
-	accul.clear();
-	dq.assign(n, - 1);
-	accul.assign(n, - 1);
+deque<string> cmdq;
+
+void parsing(string& cmd) {
+	int num = 0;
+	for (char& c : cmd) {
+		switch (c) {
+		case ' ':
+			dq.push_back(num);
+			num = 0;
+			break;
+		default:
+			num = num * 10 + (c-'0');
+			break;
+		}
+	}
+	dq.push_back(num);
 }
 
-int getAcculSum(int idx) {
-	if (idx == -1)
-		return 0;
-	
-		if (accul.at(idx) != -1) {
-			return accul[idx];
+pair<int,int> parsing2(string& cmd) {
+	pair<int, int> q;
+
+	int num = 0;
+	for (char& c : cmd) {
+		switch (c) {
+		case ' ':
+			q.first = num;
+			num = 0;
+			break;
+		default:
+			num = num * 10 + (c - '0');
+			break;
 		}
-		else {
-			accul.at(idx) = dq.at(idx) + getAcculSum(idx - 1);
-			return accul.at(idx);
-		}
-	
+	}
+	q.second = num;
+
+	return q;
+}
+
+void init() {
+	cin >> n;
+	cin >> qn;
+	cin.ignore();
+
+	string cmd;
+	getline(cin, cmd);
+
+	parsing(cmd);
+
+
+	for (int i = 1; i <= qn; i++) {
+		string cmd2;
+		getline(cin, cmd2);
+		cmdq.push_back(cmd2);
+	}
 }
 
 int main() {
@@ -33,22 +70,23 @@ int main() {
 	cin.tie(0);
 	cout.tie(0);
 
-	cin >> n >> m;
-
 	init();
 
-	for (int i = 1; i <= n; i++) {
-		cin >> dq[i - 1];
+	deque<int> sumdq;
+	sumdq.push_back(dq.at(0));
+	for (int i = 1; i <= n - 1; i++) {
+		sumdq.push_back(sumdq.at(i - 1) + dq.at(i));
 	}
-	accul[0] = dq[0];
+	sumdq.push_front(0);
 
-	for (int i = 1; i <= m; i++) {
-		int s, d; cin >> s >> d;
-		--s; --d;
-
-		cout<<getAcculSum(d)-getAcculSum(--s)<<"\n";
+	string result = "";
+	for (int i = 0; i <= qn - 1; i++) {
+		pair<int,int> p=parsing2(cmdq.at(i));
+		
+		result+=(to_string(sumdq.at(p.second) - sumdq.at(p.first - 1))+"\n");
 	}
 
+	cout << result;
 
 	return 0;
 }
