@@ -1,135 +1,71 @@
 #include <iostream>
 #include <deque>
+#include <unordered_map>
 #include <string>
-using namespace std;
 
-struct neighbor {
-	int n;
-	int w;
+using namespace std;
+//100,000 * 100,000 = 10,000,000,000 => 4백억 바이트 > 256 * 1024 * 1024
+
+
+class graph {
+public:
+	deque<deque<int>> neighbors;
+	unordered_map<string, int> weights;
+	string getKey(int s, int d) { return to_string(s) + "->" + to_string(d); }
 };
 
-deque<deque<neighbor>> matrix;
-
+graph _graph;
 int n;
 
-void parse(string& str) {
-	int len = str.length() - 1;
-	int s;
+class info {
+public:
+	long long w;
+	int cur;
+};
 
-	int num = 0;
-	int we = 0;
-	bool ready = false;
-	for (int i = 0; i <= len; i++) {
-		if (i == 0) {
-			s = str[i]-'0';
-			++i;
-			continue;
-		}
-		else {
-			char& c = str[i];
+info getMax(int s,int n) {
+	deque<bool> reserved;
+	deque<info> que;
+	deque<info> results;
 
-			switch (c) {
-			case '-':
-				return;
-				break;
-			case ' ':
-				if (!ready) {
-					ready = true;
-				}
-				else {
-					ready = false;
-					matrix.at(s).push_back({ num,we });
-					num = 0;
-					we = 0;
-				}
-
-				break;
-			default:
-				int d = c-'0';
-
-				if (!ready)
-					num = num*10+d;
-				else
-					we = we * 10 + d;
-
-				break;
-			}
-		}
-	}
-}
-
-void init() {
-	cin >> n;
-	cin.ignore();
-
-	matrix.assign(n + 1, {});
-
-	for (int i = 1; i <= n; i++) {
-
-		/*string str;
-		getline(cin, str);
-
-		parse(str);
-		*/
-
-
-		int s;
-		cin >> s;
-
-		while (1) {
-			int x; int w;
-			cin >> x;
-			if (x == -1)
-				break;
-
-			cin >> w;
-			matrix.at(s).push_back({ x,w });
-		}
-	}
-}
-
-deque<neighbor> bfs(int s) {
-	deque<bool> visited(n + 1, false);
-	deque<neighbor> que;
-
-	deque<neighbor> result;
-	result.push_back({ 0,0 });
-
-	int start = s;
-
-	que.push_back({start,0});
-	visited.at(start) = true;
-
+	reserved.assign(n + 1, false);
+	que.push_back({0,s});
+	reserved.at(s) = true;
+	
 	while (!que.empty()) {
-		neighbor cur=que.front();
+		info curInfo=que.front();
 		que.pop_front();
 
-		deque<neighbor>& neighbors = matrix.at(cur.n);
+		deque<int>& neighbors = _graph.neighbors.at(curInfo.cur);
 
-		bool deadEnd = true;
-		for (neighbor& ni : neighbors) {
-			if (!visited.at(ni.n)) {
-				deadEnd = false;
-
-				que.push_back({ni.n,cur.w+ni.w});
-				visited.at(ni.n) = true;
+		bool isEnd = true;
+		for (int& neighbor : neighbors) {
+			if (reserved.at(neighbor)) {
+				continue;
 			}
+
+			int& weight = _graph.weights.at(_graph.getKey(curInfo.cur,neighbor));
+
+			que.push_back({weight+curInfo.w,neighbor });
+			reserved.at(neighbor) = true;
+
+			isEnd = false;
 		}
 
-		if (deadEnd) {
-			if (cur.w > result.at(0).w) {
-				result.clear();
-				result.push_back(cur);
-			}
-			else if (cur.w == result.at(0).w) {
-				result.push_back(cur);
-			}
+		if (isEnd) {
+			results.push_back(curInfo);
 		}
 	}
 
-	
-	return result;
+	info maxInfo = {-1,-1};
+	for (info& info : results) {
+		if (maxInfo.w < info.w) {
+			maxInfo.w = info.w;
+			maxInfo.cur = info.cur;
+		}
+	}
 
+	return maxInfo;
 }
 
 int main() {
@@ -137,20 +73,35 @@ int main() {
 	cin.tie(0);
 	cout.tie(0);
 
-	init();
+	cin >> n;
 
-	deque<neighbor> r1 = bfs(2);
+	_graph.neighbors.assign(n + 1, {});
 
-	int max = 0;
-	/*for (neighbor& ni : r1) {
-		deque<neighbor> r2 = bfs(ni.n);
-		if (max < r2.at(0).w)
-			max = r2.at(0).w;
-	}*/
+	for (int i = 1; i <= n; i++) {
+		int x;
+		cin >> x;
+		int s = x;
 
-	max = bfs(r1.at(0).n).at(0).w;
+		while (true) {
+			cin >> x;
+			if (x == -1)
+				break;
 
-	cout<< max;
+			int d = x;
+			cin >> x;
+			int w = x;
+
+			_graph.neighbors.at(s).push_back(d);
+			_graph.weights.insert({ _graph.getKey(s,d),w });
+		}
+	}
+
+	info first=getMax(1, n);
+
+
+	info second = getMax(first.cur, n);
+
+	cout <<  second.w;
 
 	return 0;
 }
