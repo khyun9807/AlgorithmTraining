@@ -3,6 +3,6 @@ public class Main {
         // Please write your code here.
         int a=13;
         double b=0.165;
-        System.out.printf("%.4f",a*b);
+        System.out.printf("%d * %f = %f",a,b,a*b);
     }
 }
