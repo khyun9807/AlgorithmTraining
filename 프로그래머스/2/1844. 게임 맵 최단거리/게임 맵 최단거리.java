@@ -1,81 +1,60 @@
 import java.util.*;
 
-class Solution {      //0  1  2  3
-                      //북 동 남 서
-    int[] dy=new int[]{-1,0,1,0};
-    int[] dx=new int[]{0,1,0,-1};
-
-    int n;
-    int m;
-    boolean[][] reserved;
-    class Node{
-        public int y;
-        public int x;
-        public int c;
-        public Node(int _y, int _x, int _c){
-            y=_y;
-            x=_x;
-            c=_c;
-        }
-    }
-    public int solution(int[][] maps) {
-        n=maps.length;
-        m=maps[0].length;
-        reserved=new boolean[n][];
-        for(int i=0;i<n;i++){
-            reserved[i]=new boolean[m];
-        }
-        
-        for(int i=0;i<n;i++){
-            for(int j=0;j<m;j++){
-                if(maps[i][j]==0){
-                    reserved[i][j]=true;
-                }
-            }
-        }
-        
-        Deque<Node> que=new ArrayDeque<>();
-        
-        Node cur=new Node(0,0,1);
-        que.addLast(cur);
-        
-        ArrayList<Integer> results=new ArrayList();
-        
+class Solution {
+    int nlen=0;
+    int mlen=0;
+    int answer=0;
+    int[][]map=null;
+    ArrayDeque<int[]> que=new ArrayDeque<>();
+    //y,x,v
+    
+    int[]dy=new int[]{-1,0,1,0};
+    int[]dx=new int[]{0,1,0,-1};
+    
+    ArrayDeque<Integer> results=new ArrayDeque<>();
+    
+    void func(){
+        int cy=0;int cx=0;int cv=1;
+        que.addLast(new int[]{cy,cx,cv});
+        map[cy][cx]=0;
         while(!que.isEmpty()){
-            cur=que.pollFirst();
-            
-            int cy=cur.y;
-            int cx=cur.x;
-            int cc=cur.c;
-            
-            if(cy==n-1&&cx==m-1){
-                results.add(cc);
+            int[] c=que.peekFirst();
+            que.removeFirst();
+            cy=c[0];cx=c[1];cv=c[2];
+            if(cy==nlen-1&&cx==mlen-1){
+                results.addLast(cv);
                 continue;
             }
             
             for(int i=0;i<4;i++){
                 int ny=cy+dy[i];
+                if(ny<0||ny>=nlen)continue;
                 int nx=cx+dx[i];
+                if(nx<0||nx>=mlen)continue;
                 
-                if(ny<0||ny>=n) continue;
-                if(nx<0||nx>=m) continue;
+                if(map[ny][nx]==0)continue;
                 
-                if(!reserved[ny][nx]){
-                    reserved[ny][nx]=true;
-                    que.addLast(new Node(ny,nx,cc+1));
-                }
+                int nv=cv+1;
+                
+                que.addLast(new int[]{ny,nx,nv});
+                map[ny][nx]=0;
             }
         }
-        
-        int answer = 0;
-        
-        if(results.isEmpty()){
-            return -1;
+    }
+    
+    public int solution(int[][] maps) {
+        nlen=maps.length;
+        mlen=maps[0].length;
+        map=new int[nlen][];
+        for(int i=0;i<nlen;i++){
+            map[i]=Arrays.copyOf(maps[i],mlen);
         }
         
-        Collections.sort(results);
+        func();
         
-        answer=results.get(0);
+        if(results.isEmpty()) return -1;
+        
+        answer=Collections.min(results);
         
         return answer;
     }
