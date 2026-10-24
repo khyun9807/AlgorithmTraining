@@ -5,10 +5,13 @@ public class Main {
 
     static int[][]results=null;
     static boolean[] isMin=null;
+    static boolean[] isDone=null;
     static int[] func(int target){
         //System.out.println(target+1);
+        if(isDone[target])return results[target];
         if(isMin[target]){
             results[target][target]=1;
+            isDone[target]=true;
             return results[target];
         }
         int[] targetNeighborInfo=graph[target];
@@ -24,6 +27,7 @@ public class Main {
             }
         }
 
+        isDone[target]=true;
         return results[target];
     }
 
@@ -33,6 +37,7 @@ public class Main {
         graph=new int[n][n];
         results=new int[n][n];
         int m = sc.nextInt();
+        isDone=new boolean[n];
         isMin=new boolean[n];
         Arrays.fill(isMin,true);
         // Please write your code here.
