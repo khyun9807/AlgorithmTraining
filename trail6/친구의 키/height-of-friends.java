@@ -1,49 +1,56 @@
 import java.util.*;
 
 public class Main {
+    static int len=0;
+    static ArrayList<Integer>[] graph=null;
+    static boolean[] isDone=null;
+    static ArrayDeque<Integer> st=null;
+
+    static void dfs(int cur){
+        if(isDone[cur])return;
+        ArrayList<Integer> neighbors=graph[cur];
+
+        //boolean isDeadend=true;
+        for(int neighbor : neighbors){
+            if(isDone[neighbor])continue;
+
+            //isDeadend=false;
+
+            dfs(neighbor);
+        }
+
+        //if(isDeadend)
+        {
+            isDone[cur]=true;
+            st.addLast(cur);
+        }
+    }
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
-        ArrayList<Integer>[] graph=new ArrayList[n];
+        len=n;
+        graph=new ArrayList[n];
         for(int i=0;i<n;i++)graph[i]=new ArrayList<>();
-
-        int[] take=new int[n];
-        Arrays.fill(take,0);
-
         int m = sc.nextInt();
         for (int i = 0; i < m; i++) {
             int a = sc.nextInt();--a;
             int b = sc.nextInt();--b;
 
-            take[b]++;
             graph[a].add(b);
         }
 
+        isDone=new boolean[n];
+        Arrays.fill(isDone,false);
+        st=new ArrayDeque<>();
 
-        ArrayDeque<Integer> que=new ArrayDeque<>();
         for(int i=0;i<n;i++){
-            if(take[i]==0)que.addLast(i);
+            dfs(i);
         }
 
-        ArrayList<Integer> done=new ArrayList<>();
-        while(!que.isEmpty()){
-            int cur=que.peekFirst();
-            que.removeFirst();
-
-            done.add(cur);
-
-            ArrayList<Integer> neighbors=graph[cur];
-            for(int neighbor : neighbors){
-                if(take[neighbor]==0)continue;
-                take[neighbor]--;
-                if(take[neighbor]==0)que.addLast(neighbor);
-            }
+        while(!st.isEmpty()){
+            System.out.print((st.peekLast()+1)+" ");
+            st.removeLast();
         }
-
-        for(int a : done){
-            ++a;
-            System.out.print(a+" ");
-        }
-        
     }
 }
